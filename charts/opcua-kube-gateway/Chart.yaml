@@ -1,0 +1,18 @@
+apiVersion: v2
+name: opcua-kube-gateway
+description: A Kubernetes-native OPC-UA gateway that bridges factory-floor sensors to cloud-native observability stacks
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
+keywords:
+  - opcua
+  - kubernetes
+  - operator
+  - industrial-iot
+  - prometheus
+  - observability
+home: https://github.com/opcua-kube-gateway/opcua-kube-gateway
+sources:
+  - https://github.com/opcua-kube-gateway/opcua-kube-gateway
+maintainers:
+  - name: opcua-kube-gateway

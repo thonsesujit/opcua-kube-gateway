@@ -1,0 +1,28 @@
+apiVersion: opcua.gateway.io/v1alpha1
+kind: OPCUASubscription
+metadata:
+  name: pump-monitoring
+  namespace: factory-floor
+spec:
+  endpoint: opc.tcp://plc-01.factory:4840
+  securityMode: None
+  nodes:
+    - nodeId: "ns=2;s=Temperature"
+      name: pump_temperature
+      unit: celsius
+      interval: 1s
+    - nodeId: "ns=2;s=Pressure"
+      name: pump_pressure
+      unit: bar
+      interval: 5s
+    - nodeId: "ns=2;s=MachineStatus"
+      name: pump_status
+      interval: 5s
+    - nodeId: "ns=2;s=ProductionCount"
+      name: production_count
+      unit: units
+      interval: 10s
+  exporters:
+    prometheus:
+      enabled: true
+      prefix: factory_

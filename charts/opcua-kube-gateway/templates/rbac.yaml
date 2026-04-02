@@ -1,0 +1,37 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ include "opcua-kube-gateway.fullname" . }}
+  labels:
+    {{- include "opcua-kube-gateway.labels" . | nindent 4 }}
+rules:
+  - apiGroups: ["opcua.gateway.io"]
+    resources: ["opcuasubscriptions"]
+    verbs: ["get", "list", "watch", "update", "patch"]
+  - apiGroups: ["opcua.gateway.io"]
+    resources: ["opcuasubscriptions/status"]
+    verbs: ["get", "update", "patch"]
+  - apiGroups: ["opcua.gateway.io"]
+    resources: ["opcuasubscriptions/finalizers"]
+    verbs: ["update"]
+  - apiGroups: [""]
+    resources: ["events"]
+    verbs: ["create", "patch"]
+  - apiGroups: ["coordination.k8s.io"]
+    resources: ["leases"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ include "opcua-kube-gateway.fullname" . }}
+  labels:
+    {{- include "opcua-kube-gateway.labels" . | nindent 4 }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ include "opcua-kube-gateway.fullname" . }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ include "opcua-kube-gateway.serviceAccountName" . }}
+    namespace: {{ .Release.Namespace }}

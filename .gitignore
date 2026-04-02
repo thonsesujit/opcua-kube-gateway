@@ -56,3 +56,8 @@ Thumbs.db
 
 # Claude Code
 .claude/settings.local.json
+
+# Open Spec
+openspec/
+
+

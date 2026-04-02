@@ -1,0 +1,12 @@
+services:
+  simulator:
+    build:
+      context: ./simulator
+      dockerfile: Dockerfile
+    ports:
+      - "4840:4840"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import socket; s=socket.create_connection(('localhost',4840),2); s.close()"]
+      interval: 5s
+      timeout: 3s
+      retries: 5

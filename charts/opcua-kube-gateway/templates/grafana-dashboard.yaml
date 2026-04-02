@@ -1,0 +1,116 @@
+{{- if .Values.grafanaDashboard.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "opcua-kube-gateway.fullname" . }}-dashboard
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "opcua-kube-gateway.labels" . | nindent 4 }}
+    {{- with .Values.grafanaDashboard.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+data:
+  opcua-kube-gateway.json: |
+    {
+      "annotations": { "list": [] },
+      "editable": true,
+      "fiscalYearStartMonth": 0,
+      "graphTooltip": 0,
+      "id": null,
+      "links": [],
+      "panels": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "fieldConfig": {
+            "defaults": { "color": { "mode": "palette-classic" }, "unit": "short" }
+          },
+          "gridPos": { "h": 8, "w": 12, "x": 0, "y": 0 },
+          "id": 1,
+          "options": { "legend": { "displayMode": "list" }, "tooltip": { "mode": "single" } },
+          "targets": [
+            {
+              "expr": "opcua_gateway_connections_active",
+              "legendFormat": "Active Connections"
+            }
+          ],
+          "title": "Active OPC-UA Connections",
+          "type": "stat"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "fieldConfig": {
+            "defaults": { "color": { "mode": "palette-classic" }, "unit": "short" }
+          },
+          "gridPos": { "h": 8, "w": 12, "x": 12, "y": 0 },
+          "id": 2,
+          "targets": [
+            {
+              "expr": "opcua_gateway_subscriptions_active",
+              "legendFormat": "Active Subscriptions"
+            }
+          ],
+          "title": "Active Subscriptions",
+          "type": "stat"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "fieldConfig": {
+            "defaults": { "color": { "mode": "palette-classic" } }
+          },
+          "gridPos": { "h": 10, "w": 24, "x": 0, "y": 8 },
+          "id": 3,
+          "targets": [
+            {
+              "expr": "{__name__=~\"opcua_.*\", __name__!~\"opcua_gateway_.*\"}",
+              "legendFormat": "{{`{{__name__}}`}} ({{`{{subscription}}`}})"
+            }
+          ],
+          "title": "OPC-UA Node Values",
+          "type": "timeseries"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "gridPos": { "h": 8, "w": 12, "x": 0, "y": 18 },
+          "id": 4,
+          "targets": [
+            {
+              "expr": "rate(opcua_gateway_errors_total[5m])",
+              "legendFormat": "{{`{{type}}`}}"
+            }
+          ],
+          "title": "Error Rate (5m)",
+          "type": "timeseries"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "gridPos": { "h": 8, "w": 12, "x": 12, "y": 18 },
+          "id": 5,
+          "targets": [
+            {
+              "expr": "rate(opcua_gateway_reconnections_total[5m])",
+              "legendFormat": "Reconnections"
+            }
+          ],
+          "title": "Reconnection Rate (5m)",
+          "type": "timeseries"
+        }
+      ],
+      "schemaVersion": 39,
+      "tags": ["opcua", "industrial-iot", "factory"],
+      "templating": {
+        "list": [
+          {
+            "current": { "selected": false, "text": "default", "value": "default" },
+            "hide": 0,
+            "includeAll": false,
+            "name": "datasource",
+            "query": "prometheus",
+            "type": "datasource"
+          }
+        ]
+      },
+      "time": { "from": "now-1h", "to": "now" },
+      "title": "OPC-UA Kube Gateway",
+      "uid": "opcua-kube-gateway"
+    }
+{{- end }}

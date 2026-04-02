@@ -1,0 +1,20 @@
+apiVersion: opcua.gateway.io/v1alpha1
+kind: OPCUASubscription
+metadata:
+  name: simulator-test
+spec:
+  endpoint: opc.tcp://localhost:4840
+  securityMode: None
+  nodes:
+    - nodeId: "ns=2;s=Temperature"
+      name: sim_temperature
+      unit: celsius
+      interval: 1s
+    - nodeId: "ns=2;s=Pressure"
+      name: sim_pressure
+      unit: bar
+      interval: 1s
+  exporters:
+    prometheus:
+      enabled: true
+      prefix: sim_
