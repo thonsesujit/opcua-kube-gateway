@@ -159,6 +159,18 @@ Key settings:
 | `grafanaDashboard.enabled` | `false` | Create Grafana dashboard ConfigMap |
 | `resources.limits.memory` | `256Mi` | Memory limit |
 
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for local setup, project structure, and how to submit a pull request.
+
+## Roadmap
+
+See [ROADMAP.md](ROADMAP.md) for planned features and milestones.
+
+## Architecture
+
+See [docs/architecture.md](docs/architecture.md) for a deep-dive into the reconcile loop, component design, and key decisions.
+
 ## License
 
 Apache 2.0
