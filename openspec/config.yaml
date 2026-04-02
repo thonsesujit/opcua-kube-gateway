@@ -1,0 +1,20 @@
+schema: spec-driven
+
+context: |
+  Project: opcua-kube-gateway
+  Tagline: A Kubernetes-native OPC-UA gateway that bridges factory-floor sensors to cloud-native observability stacks.
+  Tech stack: Go, Kubernetes Operator SDK (controller-runtime), gopcua/opcua, Prometheus client, OpenTelemetry SDK, Helm, Docker, GitHub Actions
+  Domain: Industrial IoT (IIoT) / OT-IT Convergence / Platform Engineering
+  Target users: Manufacturing companies running K8s with OPC-UA on factory floors (Siemens, ABB, BMW, defense contractors)
+  Author background: 5 years industrial automation (PLC/SCADA/OPC-UA) + 5+ years cloud-native (K8s/Istio/Spring Boot)
+  License: Apache 2.0
+
+rules:
+  proposal:
+    - Focus on what makes this unique (no existing K8s operator for OPC-UA)
+    - Include architecture diagram in ASCII
+    - Define MVP scope clearly
+  tasks:
+    - Break tasks into max 4-hour chunks
+    - Each task should be independently testable
+    - Follow TDD (RED-GREEN-REFACTOR)
